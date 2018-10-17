@@ -1,0 +1,113 @@
+#N canvas 882 76 999 727 10;
+#X obj 443 100 rfft~;
+#X obj 443 129 *~;
+#X obj 484 129 *~;
+#X obj 443 178 biquad~ 0 0 0 0 1;
+#X obj 443 156 q8_sqrt~;
+#X obj 444 25 inlet~;
+#X obj 620 14 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 620 37 openpanel;
+#X msg 619 59 open \$1;
+#X obj 619 85 readsf~ 2;
+#X msg 713 70 start;
+#X msg 791 71 stop;
+#X obj 244 152 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 281 165 metro 50;
+#X obj 244 123 loadbang;
+#N canvas 0 50 450 250 (subpatch) 0;
+#X array spectrum 100 float 5;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0;
+#X coords 0 256 127 0 400 150 1 0 0;
+#X restore 442 272 graph;
+#X obj 444 212 tabwrite~ spectrum;
+#X obj 618 162 dac~;
+#X obj 619 115 *~ 0.5;
+#X obj 244 202 print~;
+#X obj 41 27 block~ 4096;
+#X obj 92 354 t f b;
+#X obj 92 418 until;
+#X obj 90 451 f;
+#X obj 130 452 + 1;
+#X floatatom 184 466 5 0 0 0 - - -;
+#X floatatom 23 465 5 0 0 0 - - -;
+#X msg 173 400 0;
+#X obj 160 595 pack;
+#X floatatom 167 288 5 0 0 0 - - -;
+#X obj 33 529 print index;
+#X obj 129 531 print value;
+#X msg 92 300 256;
+#X obj 264 600 pack;
+#N canvas 0 50 450 250 (subpatch) 0;
+#X array array1 100 float 3;
+#A 0 0 4.12588 4.71257 5.2419 6.87597 6.93457 2.12702 2.49179 12.4309
+9.42066 14.4983 47.8057 8.3231 12.9999 36.8526 56.0313 10.9086 13.7853
+12.4866 4.65922 5.67678 6.42026 14.1823 14.0197 0.984181 6.41602 9.95821
+18.1456 13.0278 33.7597 35.6158 51.4451 87.227 260.635 218.267 70.8532
+40.4857 39.2351 24.1017 26.5755 14.9855 19.032 32.4803 21.7362 9.57543
+8.03227 8.8931 15.1632 8.70199 5.48828 3.59064 5.527 8.40101 6.26289
+12.5863 50.4635 64.7281 23.349 17.7143 12.3223 10.4917 5.97594 5.75753
+13.8819 12.293 10.8725 36.3694 8.812 8.6107 25.2427 1.71586 4.03149
+0.672295 3.79263 4.25446 8.99094 7.82264 7.19755 6.12754 6.66764 7.3619
+8.22225 12.0832 30.0774 7.27291 4.43645 3.61315 3.93923 3.24811 5.67827
+3.90035 4.13894 4.84718 5.97834 4.7969 7.65595 22.9528 14.4766 19.1948
+19.1948;
+#X coords 0 256 127 0 400 150 1 0 0;
+#X restore 465 477 graph;
+#X obj 90 487 tabread spectrum;
+#X obj 214 531 tabwrite array1;
+#X obj 393 242 print~;
+#X obj 317 232 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 38 580 unpack f f f f;
+#X floatatom 32 629 5 0 0 0 - - -;
+#X floatatom 71 630 5 0 0 0 - - -;
+#X floatatom 107 645 5 0 0 0 - - -;
+#X floatatom 160 660 5 0 0 0 - - -;
+#X obj 324 406 tabread4~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 1 2 0;
+#X connect 0 1 2 1;
+#X connect 1 0 4 0;
+#X connect 2 0 4 0;
+#X connect 3 0 16 0;
+#X connect 3 0 37 0;
+#X connect 4 0 3 0;
+#X connect 5 0 0 0;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 9 0 0 0;
+#X connect 9 0 18 0;
+#X connect 10 0 9 0;
+#X connect 11 0 9 0;
+#X connect 12 0 13 0;
+#X connect 13 0 16 0;
+#X connect 14 0 12 0;
+#X connect 18 0 17 0;
+#X connect 18 0 17 1;
+#X connect 21 0 22 0;
+#X connect 21 1 27 0;
+#X connect 22 0 23 0;
+#X connect 23 0 24 0;
+#X connect 23 0 26 0;
+#X connect 23 0 30 0;
+#X connect 23 0 35 0;
+#X connect 23 0 36 1;
+#X connect 24 0 23 1;
+#X connect 24 0 25 0;
+#X connect 27 0 23 1;
+#X connect 32 0 21 0;
+#X connect 35 0 31 0;
+#X connect 35 0 36 0;
+#X connect 35 0 39 0;
+#X connect 38 0 37 0;
+#X connect 39 0 40 0;
+#X connect 39 1 41 0;
+#X connect 39 2 42 0;
+#X connect 39 3 43 0;
