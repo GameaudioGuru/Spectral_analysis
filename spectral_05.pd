@@ -1,0 +1,249 @@
+#N canvas 398 28 1484 1071 10;
+#N canvas 2199 261 473 564 spectrum 1;
+#X obj 328 61 rfft~;
+#X obj 130 188 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#N canvas 51 367 1153 478 (subpatch) 0;
+#X array spectrum2 128 float 5;
+#A 0 0 0 0.114765 0.207221 0.274409 0.0815399 0.0850212 0.137956 0.131468
+0.0983679 0.0606933 0.0750941 0.0949254 0.0376262 0.0500324 0.0351553
+0.0111707 0.0504521 0.0578731 0.0433852 0.0350542 0.0479978 0.0671363
+0.0129867 0.0441135 0.0490864 0.022621 0.0448451 0.0164401 0.0124125
+0.0182178 0.0125984 0.0245393 0.0356173 0.0413939 0.0194905 0.017432
+0.00505833 0.0160325 0.00831463 0.0209037 0.0104587 0.0148636 0.0091227
+0.0108975 0.0142105 0.0135573 0.00544421 0.00811253 0.00995397 0.00485125
+0.00642532 0.009207 0.0107331 0.00887749 0.00393602 0.0066704 0.0032225
+0.0186497 0.0187709 0.00644603 0.00821148 0.00791909 0.00157167 0.0156641
+0.00574222 0.00421178 0.0120843 0.00956522 0.00871803 0.00830497 0.0146557
+0.00773182 0.00547535 0.00464916 0.0111132 0.00591112 0.00262034 0.00173516
+0.0140025 0.00252609 0.0069548 0.00982312 0.00739725 0.00910067 0.00570327
+0.00955993 0.00929446 0.0102375 0.00470664 0.010131 0.00697174 0.00423882
+0.005666 0.00516716 0.0111827 0.00640069 0.00338462 0.00278747 0.00631987
+0.00337621 0.0080388 0.00890192 0.00608715 0.0101392 0.00258629 0.00559319
+0.00270066 0.00937187 0.00462532 0.00784601 0.00504919 0.00286554 0.00986884
+0.00350605 0.00186773 0.00200976 0.00745186 0.00424324 0.00255841 0.00239372
+0.00409208 0.00573303 0.00349046 0.00707296 0.00467849 0.00295224 0.00130496
+;
+#X coords 0 100 127 0 400 150 1 0 0;
+#X restore 36 379 graph;
+#X obj 328 97 *~;
+#X obj 355 97 *~;
+#X obj 328 233 biquad~ 0 0 0 0 1;
+#X obj 130 210 metro 50;
+#X obj 327 135 q8_sqrt~;
+#X text 35 531 20Hz;
+#X text 412 530 2KHz;
+#X obj 62 158 loadbang;
+#X msg 46 90 \; pd dsp 1;
+#X obj 52 311 tabwrite~ spectrum2;
+#X obj 327 25 inlet~;
+#X obj 42 27 block~ 4096;
+#X obj 340 313 print;
+#X obj 327 182 /~ 2;
+#X connect 0 0 3 0;
+#X connect 0 0 3 1;
+#X connect 0 1 4 0;
+#X connect 0 1 4 1;
+#X connect 1 0 6 0;
+#X connect 3 0 7 0;
+#X connect 4 0 7 0;
+#X connect 5 0 12 0;
+#X connect 6 0 12 0;
+#X connect 7 0 16 0;
+#X connect 10 0 1 0;
+#X connect 10 0 11 0;
+#X connect 13 0 0 0;
+#X connect 16 0 5 0;
+#X coords 0 -1 1 1 420 200 1 25 350;
+#X restore 22 237 pd spectrum;
+#X obj 23 63 adc~;
+#X obj 159 684 samplerate~;
+#X obj 24 759 expr $f1 * ($f2 / 4096);
+#X obj 28 627 tabread spectrum2;
+#X obj 43 507 until;
+#X obj 47 994 pack f f;
+#X obj 92 954 f;
+#X obj 21 940 t f b;
+#X obj 47 1034 print;
+#X obj 43 530 f;
+#X obj 89 527 + 1;
+#X obj 43 475 t f b;
+#X msg 145 489 0, f 5;
+#X text 72 453 <- click on this to have freq and amp info printed;
+#X obj 96 63 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 96 86 openpanel;
+#X msg 95 108 open \$1;
+#X obj 95 134 readsf~ 2;
+#X msg 192 116 start;
+#X msg 262 114 stop;
+#X obj 92 214 dac~;
+#X obj 95 186 *~;
+#X obj 164 173 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 95 160 *~ 0.5;
+#X obj 774 457 list prepend;
+#X obj 863 472 t l;
+#X floatatom 655 908 5 0 0 0 - - -;
+#X obj 245 489 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 712 907 5 0 0 0 - - -;
+#X floatatom 761 907 5 0 0 0 - - -;
+#X floatatom 815 907 5 0 0 0 - - -;
+#X floatatom 873 907 5 0 0 0 - - -;
+#X floatatom 928 906 5 0 0 0 - - -;
+#X floatatom 990 908 5 0 0 0 - - -;
+#X obj 482 408 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 711 441 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 711 489 list append;
+#X obj 731 316 i;
+#X obj 731 198 route bang float;
+#X obj 804 260 moses 0;
+#X obj 843 284 + 0.5;
+#X obj 804 284 - 0.5;
+#X obj 777 227 t b f;
+#X obj 167 914 s roundedList;
+#X obj 774 421 r roundedList;
+#X text 273 489 this bang initializes the list;
+#X obj 245 517 s listInitialize;
+#X obj 859 443 r listInitialize;
+#X text 717 394 this is where the list of frequencies is made;
+#X obj 24 784 s freq;
+#X obj 731 162 r freq;
+#X obj 28 696 s amp;
+#X obj 107 926 r amp;
+#X floatatom 935 295 5 0 0 0 - - -;
+#X obj 28 569 f;
+#X obj 145 508 s init;
+#X obj 85 504 r init;
+#X obj 114 544 s selector;
+#X obj 469 148 r selector;
+#X obj 468 213 s selectedBang;
+#X obj 181 555 r selectedBang;
+#X text 731 132 rounds frequency to nearest integer;
+#X text 465 131 selects indexes to grab frequencies from;
+#X obj 731 341 s roundedFreq;
+#X obj 21 899 r roundedFreq;
+#X obj 28 670 t f f b;
+#X obj 39 594 s selectedIndex;
+#X obj 24 724 r selectedIndex;
+#X obj 711 520 print Frequency list;
+#X obj 171 954 s ampList;
+#X obj 775 688 r ampList;
+#X obj 775 721 list prepend;
+#X obj 864 736 t l;
+#X obj 860 707 r listInitialize;
+#X obj 712 706 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 712 754 list append;
+#X obj 712 805 print amplitude list;
+#X text 706 656 This is where the list of amplitudes is made;
+#X obj 722 780 s unpackAmp;
+#X obj 713 837 r unpackAmp;
+#X text 659 930 32;
+#X text 718 932 65;
+#X obj 469 175 sel 3 6 19 47 93 465 929;
+#X obj 713 874 unpack f f f f f f f;
+#X text 762 933 205;
+#X text 819 937 506;
+#X text 870 934 1001;
+#X text 926 932 5006;
+#X msg 43 452 1000;
+#X floatatom 257 601 5 0 0 0 - - -;
+#X msg 385 648 929;
+#X text 986 933 10002;
+#X obj 482 438 metro 50;
+#X obj 482 464 s listMetro;
+#X obj 691 679 r listMetro;
+#X text 803 833 unpack amplitude list to discrete values. These are
+the bands;
+#X obj 1139 936 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X text 516 408 starts metering;
+#X connect 1 0 0 0;
+#X connect 2 0 3 1;
+#X connect 3 0 50 0;
+#X connect 4 0 66 0;
+#X connect 5 0 10 0;
+#X connect 7 0 6 1;
+#X connect 8 0 6 0;
+#X connect 8 1 7 0;
+#X connect 10 0 11 0;
+#X connect 10 0 55 1;
+#X connect 10 0 58 0;
+#X connect 11 0 10 1;
+#X connect 12 0 5 0;
+#X connect 12 1 13 0;
+#X connect 12 1 28 0;
+#X connect 13 0 56 0;
+#X connect 15 0 16 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 18 0 24 0;
+#X connect 19 0 18 0;
+#X connect 20 0 18 0;
+#X connect 22 0 21 0;
+#X connect 22 0 21 1;
+#X connect 22 0 0 0;
+#X connect 23 0 22 1;
+#X connect 24 0 22 0;
+#X connect 25 0 26 0;
+#X connect 25 0 37 1;
+#X connect 26 0 25 1;
+#X connect 28 0 47 0;
+#X connect 30 0 97 0;
+#X connect 35 0 93 0;
+#X connect 36 0 37 0;
+#X connect 37 0 69 0;
+#X connect 38 0 54 0;
+#X connect 38 0 64 0;
+#X connect 39 0 38 0;
+#X connect 39 1 43 0;
+#X connect 40 0 42 0;
+#X connect 40 1 41 0;
+#X connect 41 0 38 1;
+#X connect 42 0 38 1;
+#X connect 43 0 38 0;
+#X connect 43 1 40 0;
+#X connect 45 0 25 0;
+#X connect 48 0 25 1;
+#X connect 51 0 39 0;
+#X connect 53 0 7 1;
+#X connect 53 0 70 0;
+#X connect 55 0 4 0;
+#X connect 55 0 67 0;
+#X connect 57 0 10 1;
+#X connect 59 0 83 0;
+#X connect 61 0 55 0;
+#X connect 65 0 8 0;
+#X connect 65 0 44 0;
+#X connect 66 0 52 0;
+#X connect 66 2 2 0;
+#X connect 68 0 3 0;
+#X connect 71 0 72 0;
+#X connect 72 0 73 0;
+#X connect 72 0 76 1;
+#X connect 73 0 72 1;
+#X connect 74 0 72 1;
+#X connect 75 0 76 0;
+#X connect 76 0 79 0;
+#X connect 80 0 84 0;
+#X connect 83 0 60 0;
+#X connect 83 1 60 0;
+#X connect 83 2 60 0;
+#X connect 83 3 60 0;
+#X connect 83 4 60 0;
+#X connect 83 5 60 0;
+#X connect 83 6 60 0;
+#X connect 84 0 27 0;
+#X connect 84 1 29 0;
+#X connect 84 2 30 0;
+#X connect 84 3 31 0;
+#X connect 84 4 32 0;
+#X connect 84 5 33 0;
+#X connect 84 6 34 0;
+#X connect 89 0 12 0;
+#X connect 93 0 89 0;
+#X connect 93 0 94 0;
+#X connect 95 0 75 0;
